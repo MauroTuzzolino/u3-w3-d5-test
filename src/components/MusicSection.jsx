@@ -1,35 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchSongsByArtist } from "../redux/reducers/songsSlice";
 import { setCurrentSong } from "../redux/reducers/playerSlice";
 import { toggleFavorite } from "../redux/reducers/favoritesSlice";
 
 const MusicSection = ({ artistName, sectionId, title }) => {
-  const [songs, setSongs] = useState([]); // Stato locale per le canzoni
-  const [error, setError] = useState(null); // Stato per eventuali errori
-  const [loading, setLoading] = useState(true); // Stato per il caricamento
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites.items);
+  const songs = useSelector((state) => state.songs.byArtist[artistName] || []);
+  const loading = useSelector((state) => state.songs.loading);
+  const error = useSelector((state) => state.songs.error);
 
-  const dispatch = useDispatch(); // Permette di inviare azioni Redux
-  const favorites = useSelector((state) => state.favorites.items); // Prende i preferiti dallo store
-
-  // Al montaggio/filtro artista, effettua il fetch delle canzoni
   useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${artistName}`);
-        if (!response.ok) throw new Error("Failed to fetch songs");
-        const { data } = await response.json();
-        setSongs(data.slice(0, 4)); // Prende solo le prime 4
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      }
-      setLoading(false);
-    };
+    dispatch(fetchSongsByArtist(artistName));
+  }, [artistName, dispatch]);
 
-    fetchSongs();
-  }, [artistName]);
+  const isFavorite = (id) => favorites.some((song) => song.id === id);
 
-  // Mostra messaggi di stato
   if (loading) return <p>Loading {title}...</p>;
   if (error)
     return (
@@ -37,9 +24,6 @@ const MusicSection = ({ artistName, sectionId, title }) => {
         Error loading {title}: {error}
       </p>
     );
-
-  // Controlla se una canzone è nei preferiti
-  const isFavorite = (songId) => favorites.some((fav) => fav.id === songId);
 
   return (
     <div id={sectionId}>
@@ -59,7 +43,7 @@ const MusicSection = ({ artistName, sectionId, title }) => {
                   cover: song.album.cover_medium,
                 })
               )
-            } // Clic sull’intero blocco seleziona la canzone
+            }
           >
             <img
               className="img-fluid rounded shadow-sm"
@@ -78,10 +62,9 @@ const MusicSection = ({ artistName, sectionId, title }) => {
               <button
                 className="btn btn-link p-0 text-white"
                 onClick={(e) => {
-                  e.stopPropagation(); // Previene il click sul div padre
+                  e.stopPropagation();
                   dispatch(toggleFavorite(song));
                 }}
-                aria-label="Toggle favorite"
               >
                 <i className={`bi ${isFavorite(song.id) ? "bi-heart-fill text-success" : "bi-heart"}`} style={{ fontSize: "1.2rem" }}></i>
               </button>
