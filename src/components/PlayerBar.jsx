@@ -27,21 +27,21 @@ const PlayerBar = () => {
           </div>
 
           <div className="d-flex flex-column justify-content-between align-items-center w-75">
-            <div className="d-flex justify-content-between w-25">
+            <div className="d-flex justify-content-between" style={{ width: "40%" }}>
               <a href="#">
-                <img src={shuffleIcon} alt="shuffle" style={{ width: "20px", height: "20px" }} />
+                <img src={shuffleIcon} alt="shuffle" style={{ width: "15px", height: "15px" }} />
               </a>
               <a href="#">
-                <img src={prevIcon} alt="prev" style={{ width: "20px", height: "20px" }} />
+                <img src={prevIcon} alt="prev" style={{ width: "15px", height: "15px" }} />
               </a>
               <a href="#">
-                <img src={playIcon} alt="play" style={{ width: "28px", height: "28px" }} />
+                <img src={playIcon} alt="play" style={{ width: "20px", height: "20px" }} />
               </a>{" "}
               <a href="#">
-                <img src={nextIcon} alt="next" style={{ width: "20px", height: "20px" }} />
+                <img src={nextIcon} alt="next" style={{ width: "15px", height: "15px" }} />
               </a>
               <a href="#">
-                <img src={repeatIcon} alt="repeat" style={{ width: "20px", height: "20px" }} />
+                <img src={repeatIcon} alt="repeat" style={{ width: "15px", height: "15px" }} />
               </a>
             </div>
             <ProgressBar now={0} className="mt-3 w-100" variant="success" style={{ height: "5px" }} />
