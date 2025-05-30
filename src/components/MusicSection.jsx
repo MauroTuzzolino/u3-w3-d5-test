@@ -10,20 +10,16 @@ const MusicSection = ({ artistName, sectionId, title }) => {
 
   // useEffect si attiva ogni volta che cambia artistName
   useEffect(() => {
-    // Funzione async per fetchare le canzoni
     const fetchSongs = async () => {
       try {
-        // Chiamo l'API passando il nome artista
         const response = await fetch(`https://striveschool-api.herokuapp.com/api/deezer/search?q=${artistName}`);
-        // Se la risposta non è ok, lancio un errore
         if (!response.ok) throw new Error("Failed to fetch songs");
-        // Estraggo i dati dal json
         const { data } = await response.json();
-        // Salvo solo i primi 4 risultati nello stato songs
         setSongs(data.slice(0, 4));
+        setLoading(false); // sposto qui setLoading a false se tutto va bene
       } catch (err) {
-        // Se c'è errore, lo salvo nello stato error
         setError(err.message);
+        setLoading(false); // e qui in caso di errore
       }
     };
 
