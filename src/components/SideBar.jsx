@@ -1,5 +1,6 @@
 import { BsHouseDoorFill, BsBookFill } from "react-icons/bs";
 import logo from "../assets/logo/logo.png";
+import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
@@ -24,16 +25,16 @@ const SideBar = () => {
             <div className="navbar-nav">
               <ul className="list-unstyled" style={{ lineHeight: 2.2 }}>
                 <li>
-                  <a className="nav-item nav-link d-flex align-items-center " href="#">
+                  <Link className="nav-item nav-link d-flex align-items-center " to="/">
                     <BsHouseDoorFill className="me-2 fs-4" />
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="nav-item nav-link d-flex align-items-center" href="#">
-                    <BsBookFill className="me-2 fs-4" />
-                    Your Library
-                  </a>
+                  <Link className="nav-item nav-link d-flex align-items-center" to="/favorites">
+                    <i className="bi bi-heart-fill me-2 fs-4 text-success" />
+                    Favorites
+                  </Link>
                 </li>
                 <li>
                   <div className="input-group mt-3">
