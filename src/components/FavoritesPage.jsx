@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFavorite } from "../redux/reducers/favoritesSlice";
 import { BsHeartFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const FavoritesPage = () => {
   const favorites = useSelector((state) => state.favorites.items);
@@ -12,7 +13,12 @@ const FavoritesPage = () => {
 
   return (
     <main className="mainPage container px-4 py-4 ms-5" style={{ marginBottom: "100px", minHeight: "100vh" }}>
-      <h2 className="text-white mb-4">Your Favorites</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="text-white mb-4">Your Favorites</h2>
+        <Link className="btn btn-outline-light d-flex align-items-center d-block d-lg-none " to="/">
+          Home
+        </Link>
+      </div>
 
       {favorites.length === 0 ? (
         <p className="text-light">No favorite songs yet.</p>

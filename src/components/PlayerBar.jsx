@@ -21,7 +21,6 @@ const PlayerBar = () => {
             {currentSong && (
               <>
                 <img src={currentSong.cover} alt={currentSong.title} style={{ width: 50, height: 50, objectFit: "cover", marginRight: 10 }} />
-
                 <div>{currentSong.title}</div>
               </>
             )}
